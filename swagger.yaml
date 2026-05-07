@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: API de Carrito de Componentes PC
+  description: Etapa 1 del TP Desarrollo Web 2 - Gestión de carrito en memoria.
+  version: 1.0.0
+
+paths:
+  /productos:
+    get:
+      summary: Listar productos
+      description: Devuelve la lista de todos los componentes de hardware disponibles en el catálogo.
+      responses:
+        '200':
+          description: Lista de productos obtenida con éxito.
+
+  /carrito:
+    get:
+      summary: Ver contenido del carrito
+      description: Devuelve la lista de productos que el usuario tiene actualmente en su carrito.
+      responses:
+        '200':
+          description: Contenido del carrito obtenido con éxito.
+    post:
+      summary: Agregar al carrito
+      description: Recibe el ID de un producto y lo suma al carrito de compras.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+      responses:
+        '201':
+          description: Producto agregado correctamente al carrito.
+        '404':
+          description: El producto con el ID proporcionado no existe.
+
+  /carrito/total:
+    get:
+      summary: Calcular total
+      description: Devuelve la suma de los precios de los productos y la cantidad total de ítems.
+      responses:
+        '200':
+          description: Total y cantidad calculados con éxito.
+
+  /carrito/{producto_id}:
+    delete:
+      summary: Eliminar producto
+      description: Elimina un producto del carrito utilizando su ID.
+      parameters:
+        - name: producto_id
+          in: path
+          required: true
+          description: ID numérico del producto a eliminar.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Producto eliminado del carrito con éxito.
+        '404':
+          description: El producto no se encontró dentro del carrito.
